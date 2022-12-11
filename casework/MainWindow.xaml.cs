@@ -27,27 +27,36 @@ using Windows.System.Display;
 using WinRT;
 using Microsoft.VisualBasic;
 using Windows.Devices.Enumeration;
+using casework.SplashScreen;
+using casework.Views;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace casework
 {
-    /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainWindow : Window
     {
+
         WindowsSystemDispatcherQueueHelper m_wsdqHelper; // See below for implementation.
         MicaController m_backdropController;
         SystemBackdropConfiguration m_configurationSource;
+
+        public static Frame ContentFrame1;
+        public static NavigationView NavigationView1;
+        public static NavigationViewItem HomeItem1;
         public MainWindow()
         {
             this.InitializeComponent();
+            ContentFrame1 = ContentFrame;
+            NavigationView1 = NavigationView;
+            HomeItem1 = HomeItem;
 
             ExtendsContentIntoTitleBar = true;
             SetTitleBar(AppTitleBar);
             TrySetSystemBackdrop();
+            NavigationView.IsPaneVisible = false;
+            ContentFrame.Navigate(typeof(SplashScreenPage));
         }
 
         private void NavigationView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
@@ -83,10 +92,11 @@ namespace casework
 
         }
 
-        private async void NavigationView_Loaded(object sender, RoutedEventArgs e)
-        {               
+        private void NavigationView_Loaded(object sender, RoutedEventArgs e)
+        {
             //ContentFrame.Navigate(typeof(HomePage));
             //SetCurrentNavigationViewItem(GetNavigationViewItems(typeof(HomePage)).First());
+            SplashScreenPage.Pro();
         }
 
         public List<NavigationViewItem> GetNavigationViewItems()

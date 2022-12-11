@@ -59,7 +59,7 @@
 
             <NavigationView.MenuItems>
 
-                <NavigationViewItem x:Name="home" Content="Home" DataContext="Tracks"
+                <NavigationViewItem x:Name="HomeItem" Content="Home" DataContext="HomePage"
                             Tag="casework.Views.HomePage"
                             ToolTipService.ToolTip="HomePage">
                     <NavigationViewItem.Icon>
