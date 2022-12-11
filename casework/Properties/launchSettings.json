@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "casework (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "casework (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
