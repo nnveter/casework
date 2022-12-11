@@ -10,7 +10,72 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button x:Name="myButton" Click="myButton_Click">Click Me</Button>
-    </StackPanel>
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="28"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="AppTitleBar">
+
+            <Image Source="iconPath/icons8.ico"
+                   HorizontalAlignment="Left" 
+                   Width="16" Height="16" 
+                   Margin="8,0"/>
+
+            <TextBlock x:Name="AppTitleTextBlock" Text="Slowfy"
+                   TextWrapping="NoWrap"
+                   Style="{StaticResource CaptionTextBlockStyle}" 
+                   VerticalAlignment="Center"
+                   Margin="28,0,0,0"/>
+
+        </Grid>
+
+
+        <NavigationView x:Name="NavigationView" Grid.Row="1" Canvas.ZIndex="0" Loaded="NavigationView_Loaded" 
+                        SelectionChanged="NavigationView_SelectionChanged" 
+                        IsBackButtonVisible="Collapsed"
+                        IsSettingsVisible="False" BackRequested="NavigationView_BackRequested"  IsBackEnabled="True" AlwaysShowHeader="True" PaneTitle="menu"
+                        PaneDisplayMode="Left"
+                        ExpandedModeThresholdWidth="500"
+                        SelectionFollowsFocus="Disabled"
+                        IsTabStop="False">
+
+
+            <NavigationView.FooterMenuItems>
+
+                <NavigationViewItem x:Name="account" Content="Account" DataContext="Account"
+                            Tag="casework.Views.//"
+                            ToolTipService.ToolTip="AccountPage">
+                    <NavigationViewItem.Icon>
+                        <SymbolIcon Symbol ="ContactPresence" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+            </NavigationView.FooterMenuItems>
+
+
+
+            <NavigationView.MenuItems>
+
+                <NavigationViewItem x:Name="home" Content="Home" DataContext="Tracks"
+                            Tag="casework.Views.HomePage"
+                            ToolTipService.ToolTip="HomePage">
+                    <NavigationViewItem.Icon>
+                        <SymbolIcon Symbol ="Home" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+            </NavigationView.MenuItems>
+
+            <Grid>
+                <Frame x:Name="ContentFrame">
+                    
+                </Frame>
+            </Grid>
+
+        </NavigationView>
+
+    </Grid>
 </Window>
