@@ -52,6 +52,9 @@ namespace casework
             NavigationView1 = NavigationView;
             HomeItem1 = HomeItem;
 
+            //ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            //localSettings.Values["JwtToken"] = null;
+
             ExtendsContentIntoTitleBar = true;
             SetTitleBar(AppTitleBar);
             TrySetSystemBackdrop();

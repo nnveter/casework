@@ -15,8 +15,10 @@
     <None Remove="SplashScreen\SplashScreenPage.xaml" />
     <None Remove="Views\HomePage.xaml" />
     <None Remove="Views\LoginPage.xaml" />
+    <None Remove="Views\OpenTaskPage.xaml" />
     <None Remove="Views\RegistrationPage.xaml" />
     <None Remove="Views\RegistrationPage2.xaml" />
+    <None Remove="Views\TaskPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -53,6 +55,21 @@
     <None Update="Views\Assets\login.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Views\Assets\man.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Views\Assets\Registration.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Views\Assets\task.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Page Update="Views\OpenTaskPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\TaskPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\RegistrationPage2.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -72,6 +89,10 @@
     <Page Update="SplashScreen\SplashScreenPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Autorization\" />
+    <Folder Include="Icons\" />
   </ItemGroup>
 
   <!-- 

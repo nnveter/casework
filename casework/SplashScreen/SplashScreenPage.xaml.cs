@@ -3,6 +3,7 @@
 
 using ABI.System;
 using casework.Views;
+using casework.Views.Autorization;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -77,6 +78,13 @@ namespace casework.SplashScreen
             else if (page == "Registration2")
             {
                 MainWindow.ContentFrame1.Navigate(typeof(RegistrationPage2), Header);
+                return true;
+            }
+            else if (page == "OpenTaskPage")
+            {
+                MainWindow.ContentFrame1.Navigate(typeof(OpenTaskPage), Header);
+                MainWindow.NavigationView1.Header = Header;
+                MainWindow.NavigationView1.SelectedItem = null;
                 return true;
             }
             else { return false; }

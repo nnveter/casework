@@ -19,12 +19,12 @@
 
         <Grid x:Name="AppTitleBar">
 
-            <Image Source="iconPath/icons8.ico"
+            <Image Source="Icons/"
                    HorizontalAlignment="Left" 
                    Width="16" Height="16" 
                    Margin="8,0"/>
 
-            <TextBlock x:Name="AppTitleTextBlock" Text="Slowfy"
+            <TextBlock x:Name="AppTitleTextBlock" Text="CaseWork"
                    TextWrapping="NoWrap"
                    Style="{StaticResource CaptionTextBlockStyle}" 
                    VerticalAlignment="Center"
@@ -67,11 +67,18 @@
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
+                <NavigationViewItem x:Name="TaskItem" Content="Task" DataContext="TaskPage"
+                            Tag="casework.Views.TaskPage"
+                            ToolTipService.ToolTip="TaskPage">
+                    <NavigationViewItem.Icon>
+                        <ImageIcon Source="ms-appx:///Views/Assets/task.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
             </NavigationView.MenuItems>
 
             <Grid>
                 <Frame x:Name="ContentFrame">
-                    
                 </Frame>
             </Grid>
 

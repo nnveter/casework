@@ -2,7 +2,7 @@
 <!-- Licensed under the MIT License. See LICENSE in the project root for license information. -->
 
 <Page
-    x:Class="casework.Views.RegistrationPage2"
+    x:Class="casework.Views.Autorization.RegistrationPage2"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:casework.Views"
@@ -13,16 +13,16 @@
 
     <Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel Orientation="Vertical" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Orientation="Vertical" Margin="150,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock x:Name="TextBlock" HorizontalAlignment="Center" Margin="0,10,8,0" FontSize="21" VerticalAlignment="Center" Text="Profile data"/>
                 <TextBox x:Name="FirstName" Margin="0,10,8,0" Width="250" PlaceholderText="First name" />
                 <TextBox PlaceholderText="Last name" x:Name="LastName" Width="250" Margin="0,10,8,0"/>
                 <TextBox x:Name="City" Margin="0,10,8,0" Width="250" PlaceholderText="City" />
                 <CheckBox x:Name="Horse" Margin="0,10,8,0" Content="Horse?"/>
-                <Button x:Name="myButton" Margin="0,10,8,0" HorizontalAlignment="Center" Click="myButton_Click">Create account</Button>
+                <Button x:Name="myButton" Margin="0,10,8,0" Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Center" Click="myButton_Click">Create account</Button>
 
             </StackPanel>
-
+            <Image VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,120,-40,120" Source="ms-appx:///Views/Assets/man.png" />
         </StackPanel>
         <Button x:Name="BackButton" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0" Click="BackButton_Click">
             <SymbolIcon Symbol="Back"/>
