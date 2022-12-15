@@ -20,14 +20,27 @@
         <GridView x:Name="GridV" Margin="21" SelectionMode="None" IsItemClickEnabled="True" ItemsSource="{Binding Source={StaticResource cvsProjects}}" MaxHeight="500" ItemClick="GridView_ItemClick">
             <GridView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Padding="20" Background="#393442">
-                        <TextBlock Text="{Binding Name}" FontWeight="Bold" 
+                    <Border Width="190" Padding="20" Background="#393442">
+                        <Grid>
+                            <Grid Margin="0,-17,-12,0" VerticalAlignment="Top" HorizontalAlignment="Right">
+                                <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Center" Height="15" Width="12" Margin="0,-2,0,0" FontSize="11" Text="{Binding urgency}"/>
+                                <ProgressRing VerticalAlignment="Center" HorizontalAlignment="Center" Height="21" Width="21" IsIndeterminate="False" Value="{Binding urgency}"/>
+                                
+                            </Grid>
+                                <StackPanel>
+                                <TextBlock Text="{Binding title}" FontWeight="Bold" TextWrapping="NoWrap" 
                                    Style="{StaticResource BaseTextBlockStyle}"/>
-                        <TextBlock Text="{Binding DueDate}" TextWrapping="NoWrap" 
-                                   Style="{StaticResource BodyTextBlockStyle}" />
-                        <CheckBox Content="Complete" IsChecked="{Binding Complete}" 
-                                  IsEnabled="True"/>
-                    </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding PrevoisTextDeadLine}" TextWrapping="NoWrap" 
+                                    Style="{StaticResource BodyTextBlockStyle}" />
+                                <TextBlock Margin="5,0,0,0" Text="{Binding DeadLineGet}" Foreground="{Binding UrgencyColor}" TextWrapping="NoWrap" 
+                                    Style="{StaticResource BodyTextBlockStyle}" />
+                            </StackPanel>
+                        </StackPanel>
+                        </Grid>
+                        <!--<CheckBox Content="Complete" IsChecked="{Binding IsComplete}" 
+                                  IsEnabled="True"/>-->
+                    </Border>
                 </DataTemplate>
             </GridView.ItemTemplate>
             <GridView.ItemsPanel>

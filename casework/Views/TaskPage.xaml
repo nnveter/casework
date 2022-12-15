@@ -9,9 +9,20 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="Transparent">
 
     <Grid>
-        
+        <Grid Height="70" Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" VerticalAlignment="Top">
+            <TextBlock x:Name="Header" Text="You task" Margin="25" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <TextBlock x:Name="TextFilter" Text="Filter" VerticalAlignment="Center"/>
+                <ComboBox x:Name="ComboBoxFilter" Width="200" Margin="5,0,25,0" PlaceholderText="DeadLine" ItemsSource="{x:Bind ItemsComboBox}">
+                    <x:String>DeadLine</x:String>
+                    <x:String>InComplate</x:String>
+                    <x:String>Complate</x:String>
+                    <x:String>All</x:String>
+                </ComboBox>
+        </StackPanel>
+        </Grid>
     </Grid>
 </Page>

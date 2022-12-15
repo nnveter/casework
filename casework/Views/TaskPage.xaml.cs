@@ -15,6 +15,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using System.Collections.ObjectModel;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -26,9 +27,16 @@ namespace casework.Views
     /// </summary>
     public sealed partial class TaskPage : Page
     {
+        ObservableCollection<String> ItemsComboBox = new ObservableCollection<String>();
         public TaskPage()
         {
             this.InitializeComponent();
+            ItemsComboBox.Add("DeadLine");
+            ItemsComboBox.Add("InComplate");
+            ItemsComboBox.Add("Complate");
+            ItemsComboBox.Add("All");
         }
+
+
     }
 }

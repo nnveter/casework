@@ -1,23 +1,30 @@
-﻿using System;
+﻿using casework;
+using casework.SplashScreen;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace CaseWork.Models;
 
 public class Task
 {
-    public int Id { get; set; }
-    public string Title { get; set; }
-    public string Assignment { get; set; }
-    public int Urgency { get; set; } = 0; // procents
-    public string UrhencyColor { get; set; } = "#FFFFFF";
-    public DateTimeKind DeadLine { get; set; }
-    public bool? IsComplete { get; set; } = false;
-    public DateTimeKind AcceptedTime { get; set; }
-    public DateTimeKind CompletedTime { get; set; }
+    public int id { get; set; }
+    public string title { get; set; }
+    public string assignment { get; set; }
+    public int urgency { get; set; } = 0; // procents
+    public string UrgencyColor { get; set; } = Constants.White;
+    public long deadLine { get; set; }
+    public DateTime DeadLineGet { get { return SplashScreenPage.UnixTimeStampToDateTime(deadLine); } }
+    public bool? isComplete { get; set; } = false;
+    public long acceptedTime { get; set; }
+    public DateTime AcceptedTimeGet { get { return SplashScreenPage.UnixTimeStampToDateTime(acceptedTime); } }
+    public long completedTime { get; set; }
+    public DateTime CompletedTimeGet { get { return SplashScreenPage.UnixTimeStampToDateTime(deadLine); } }
+
+    public User employer { get; set; }
+    public User executor { get; set; }
+    public Task? subTask { get; set; }
     
-    public User Employer { get; set; }
-    public User Executor { get; set; }
-    public Task? SubTask { get; set; }
-    
-    public long CreatedAt { get; set; } = ((DateTimeOffset)DateTime.Now).ToUnixTimeSeconds();
+    public long createdAt { get; set; } = ((DateTimeOffset)DateTime.Now).ToUnixTimeSeconds();
+
+    public string PrevoisTextDeadLine { get; set; } = "до";
 }

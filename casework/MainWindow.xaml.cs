@@ -90,7 +90,6 @@ namespace casework
             
             //NavigationView.IsBackEnabled = true;
             ContentFrame.Navigate(Type.GetType(item.Tag.ToString()), item.Content);
-            NavigationView.Header = item.DataContext;
             NavigationView.SelectedItem = item;
 
         }

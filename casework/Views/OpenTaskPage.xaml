@@ -12,9 +12,41 @@
     Background="Transparent">
 
     <Grid>
-        <StackPanel Orientation="Vertical" Margin="10">
-            <TextBlock FontSize="23" Margin="25,10,0,0" Text="Description" Foreground="DarkGray"/>
-            <TextBlock TextWrapping="Wrap" FontSize="23" Margin="25,5,20,0" Text="sdagfasagfsdgfasdgfadsgfgewetfyfddtuyfebyeygeegeegehrbrdhtsghdfgfxfsgdfsdvsrddgrdfeerfgeujgheiuhgidfhgirdughr" />
+        <StackPanel Orientation="Vertical">
+            <Grid Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}">
+                <StackPanel Orientation="Vertical">
+                    <Grid>
+                        <TextBlock Margin="20,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="Title" FontSize="30"/>
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
+                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Vertical" Margin="0,17,0,0">
+                                <TextBlock x:Name="TextUrgency" HorizontalAlignment="Center" Text="Urgency"/>
+                                <ProgressBar HorizontalAlignment="Center" Margin="0,2,0,0" x:Name="UrgencyBar" MinWidth="75"/>
+                            </StackPanel>
+                            <TextBlock VerticalAlignment="Bottom" Margin="5,0,10,0" x:Name="Urgency"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0">
+                            <TextBlock x:Name="Ot" Text="ot "/>
+                            <TextBlock x:Name="Executor" Margin="5,0,0,0"  Text="I.I. Salnikov" Foreground="DarkGray"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,0,10,0">
+                            <TextBlock x:Name="Do" Text="to "/>
+                            <TextBlock x:Name="DeadLine" Margin="5,0,0,0" Text="13.12.22 13:00" Foreground="{x:Bind colors}"/>
+                        </StackPanel>
+                    </Grid>
+                    <ProgressBar Margin="0,3,0,0"/>
+                </StackPanel>
+            </Grid>
         </StackPanel>
+        <ScrollViewer Margin="-15,90,0,0" ZoomMode="Enabled" MaxZoomFactor="10"
+              VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Visible">
+        <StackPanel  Orientation="Vertical">
+            <StackPanel Orientation="Vertical" Margin="10,4,0,0">
+                <TextBlock x:Name="TextDescription" FontSize="23" Margin="25,10,0,0" Text="Description" Foreground="DarkGray"/>
+                    <TextBlock x:Name="Assignment" TextWrapping="Wrap" FontSize="20" Margin="25,5,20,0" />
+                </StackPanel>
+        </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

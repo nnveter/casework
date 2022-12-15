@@ -4,6 +4,7 @@
 using ABI.System;
 using casework.Views;
 using casework.Views.Autorization;
+using CaseWork.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -30,6 +31,7 @@ namespace casework.SplashScreen
     /// </summary>
     public sealed partial class SplashScreenPage : Page
     {
+        public static Task task;
         public SplashScreenPage()
         {
             this.InitializeComponent();
@@ -56,7 +58,7 @@ namespace casework.SplashScreen
         /// Метод прехода между страницами;
         /// page = "Home";"Login";"Registration";
         /// </summary>
-        public static bool NavigateNextPage(String page, String Header = "") {
+        public static bool NavigateNextPage(String page, String Header = null, Task Task = null) {
             if (page == "Home")
             {
                 MainWindow.ContentFrame1.Navigate(typeof(HomePage), Header);
@@ -82,12 +84,21 @@ namespace casework.SplashScreen
             }
             else if (page == "OpenTaskPage")
             {
+                task = Task;
                 MainWindow.ContentFrame1.Navigate(typeof(OpenTaskPage), Header);
-                MainWindow.NavigationView1.Header = Header;
+                MainWindow.NavigationView1.Header = null;
                 MainWindow.NavigationView1.SelectedItem = null;
                 return true;
             }
             else { return false; }
+        }
+
+        public static DateTime UnixTimeStampToDateTime(long unixTimeStamp)
+        {
+            // Unix timestamp is seconds past epoch
+            DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            dateTime = dateTime.AddSeconds(unixTimeStamp).ToLocalTime();
+            return dateTime;
         }
     }
 }

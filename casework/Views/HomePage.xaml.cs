@@ -1,7 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
+using App2;
 using casework.SplashScreen;
+using CaseWork.Models;
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -15,8 +18,11 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text.Json;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -35,17 +41,34 @@ namespace casework.Views
             PopulateProjects();
         }
 
-        private void PopulateProjects()
+        private async void PopulateProjects()
         {
             List<Project> Projects = new List<Project>();
 
             Project newProject = new Project();
 
-            newProject.Activities.Add(new Activity()
-            { Id = 0 , Name = "Activity 1", Complete = true, DueDate = startDate.AddDays(4) });
+            ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
-            newProject.Activities.Add(new Activity()
-            { Id = 1, Name = "Activity 2", Complete = true, DueDate = startDate.AddDays(5) });
+            // load a setting that is local to the device
+            String localValue = localSettings.Values["JwtToken"] as string;
+
+            String a = await new ReqService().Get($"{Constants.URL}Tasks/get/incompleted/executor", localValue);
+            List<CaseWork.Models.Task> rec =
+                   JsonSerializer.Deserialize<List<CaseWork.Models.Task>>(a);
+            foreach (var item in rec)
+            {
+                if (item.DeadLineGet < DateTime.Now)
+                {
+                    item.UrgencyColor = Constants.Red;
+                }
+                else if (SplashScreenPage.UnixTimeStampToDateTime(item.deadLine - 172800) < DateTime.Now)
+                {
+                    item.UrgencyColor = Constants.Yellow;
+                }
+                newProject.Activities.Add(item);
+            }
+            
+
 
             Projects.Add(newProject);
 
@@ -54,9 +77,9 @@ namespace casework.Views
 
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Activity a = (Activity)e.ClickedItem;
-            txt.Text = a.Id.ToString();
-            SplashScreenPage.NavigateNextPage("OpenTaskPage", a.Name);
+            CaseWork.Models.Task a = (CaseWork.Models.Task)e.ClickedItem;
+            txt.Text = a.id.ToString();
+            SplashScreenPage.NavigateNextPage("OpenTaskPage", a.title, a);
             
             
             
@@ -67,17 +90,9 @@ namespace casework.Views
     {
         public Project()
         {
-            Activities = new ObservableCollection<Activity>();
+            Activities = new ObservableCollection<CaseWork.Models.Task>();
         }
-        public ObservableCollection<Activity> Activities { get; private set; }
+        public ObservableCollection<CaseWork.Models.Task> Activities { get; private set; }
     }
 
-    public class Activity
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public DateTime DueDate { get; set; }
-        public bool Complete { get; set; }
-        public string Project { get; set; }
-    }
 }
