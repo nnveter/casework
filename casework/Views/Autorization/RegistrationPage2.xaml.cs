@@ -35,6 +35,7 @@ namespace casework.Views.Autorization
     public sealed partial class RegistrationPage2 : Page
     {
         private API country;
+
         [Obsolete]
         public RegistrationPage2()
         {
@@ -42,15 +43,15 @@ namespace casework.Views.Autorization
 
             String host = System.Net.Dns.GetHostName();
             System.Net.IPAddress ip = System.Net.Dns.GetHostByName(host).AddressList[0];
+
             Pro(ip.ToString());
         }
 
-        public async void Pro(String ip) {
+        public async void Pro(String ip) 
+        {
             string result2 = await new ReqService().Get($"http://www.geoplugin.net/json.gp?ip={ip}");
 
-            country =
-                JsonSerializer.Deserialize<API>(result2);
-            
+            country = JsonSerializer.Deserialize<API>(result2);
         }
 
         private async void myButton_Click(object sender, RoutedEventArgs e)
@@ -74,6 +75,9 @@ namespace casework.Views.Autorization
             else {
                 ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
                 localSettings.Values["JwtToken"] = res;
+                localSettings.Values["Name"] = Name;
+                localSettings.Values["Email"] = RegistrationPage.Email1;
+
                 SplashScreenPage.NavigateNextPage("Home");
             }
         }

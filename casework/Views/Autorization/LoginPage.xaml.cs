@@ -3,6 +3,7 @@
 
 using App2;
 using casework.SplashScreen;
+using CaseWork.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -16,6 +17,7 @@ using System.Diagnostics.Metrics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text.Json;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Networking;
@@ -34,6 +36,9 @@ namespace casework.Views.Autorization
         public LoginPage()
         {
             this.InitializeComponent();
+
+            ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            Email.Text = localSettings.Values["Email"] as String;
         }
 
         private async void myButton_Click(object sender, RoutedEventArgs e)
@@ -48,8 +53,14 @@ namespace casework.Views.Autorization
             }
             else
             {
+                var res2 = await new ReqService().Get($"{Constants.URL}Users/profile", res);
+                User user = JsonSerializer.Deserialize<User>(res2);
+
                 ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
                 localSettings.Values["JwtToken"] = res;
+                localSettings.Values["Email"] = Email.Text;
+                localSettings.Values["Name"] = user.firstName;
+
                 SplashScreenPage.NavigateNextPage("Home");
             }
         }
@@ -58,6 +69,7 @@ namespace casework.Views.Autorization
         {
             SplashScreenPage.NavigateNextPage("Registration");
         }
+
     }
     public record UserCred(string Email, string Password);
 }

@@ -1,11 +1,15 @@
 ﻿namespace App2;
 
+using CaseWork.Models.Dto;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Mime;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Windows.Foundation.Collections;
 
 public class ReqService
 {
@@ -44,6 +48,10 @@ public class ReqService
         if (bearer != null) client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer);
 
         var response = await client.GetAsync(url);
+        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+        {
+            return null;
+        }
 
         String res = await response.Content.ReadAsStringAsync();
         res = res.TrimEnd('"');
@@ -51,9 +59,37 @@ public class ReqService
         return res;
     }
 
+    public async Task<string> GetTask(string url, string? bearer = null, TasksAccessFilter accessFilter = TasksAccessFilter.Executor, TasksTypeFilter typeFilter = TasksTypeFilter.All)
+    {
+        if (bearer != null) client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer);
+        TasksByFilterAr Filter = new TasksByFilterAr() { TasksAccessFilter = accessFilter, TasksTypeFilter = typeFilter };
+        if (Filter != null)
+        {
+
+            var myContent = JsonSerializer.Serialize(Filter, typeof(TasksByFilterAr));
 
 
-   
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri(url),
+                Content = new StringContent(myContent, Encoding.UTF8, MediaTypeNames.Application.Json),
+            };
+
+            var response = await client.SendAsync(request).ConfigureAwait(false);
+            response.EnsureSuccessStatusCode();
+
+            var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+            return responseBody;
+        }
+
+        return null;
+    }
+
+
+
+
 
 
 }

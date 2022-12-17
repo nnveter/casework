@@ -37,14 +37,17 @@ namespace casework.Views
         public OpenTaskPage()
         {
             this.InitializeComponent();
+
             RuLocalization();
+
             task = SplashScreenPage.task;
             Title.Text = task.title;
             Urgency.Text = task.urgency.ToString() + "%";
             UrgencyBar.Value = task.urgency;
             Assignment.Text = task.assignment;
             Executor.Text = task.executor.firstName[0] + ". " + task.executor.lastName;
-            DeadLine.Text = task.DeadLineGet.ToString();
+            DeadLine.Text = task.DeadLineGetString;
+
             if (task.DeadLineGet < DateTime.Now)
             {
                 colors = Constants.Red;
@@ -53,9 +56,6 @@ namespace casework.Views
             {
                 colors = Constants.Yellow;
             }
-
-
-
         }
 
         private void RuLocalization() {

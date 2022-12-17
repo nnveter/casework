@@ -2,7 +2,9 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using App2;
+using casework.Model;
 using casework.SplashScreen;
+using casework.Views.DialogTask;
 using CaseWork.Models;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
@@ -38,7 +40,10 @@ namespace casework.Views
         public HomePage()
         {
             this.InitializeComponent();
+
             PopulateProjects();
+            Temp();
+
         }
 
         private async void PopulateProjects()
@@ -48,11 +53,10 @@ namespace casework.Views
             Project newProject = new Project();
 
             ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-
-            // load a setting that is local to the device
             String localValue = localSettings.Values["JwtToken"] as string;
 
-            String a = await new ReqService().Get($"{Constants.URL}Tasks/get/incompleted/executor", localValue);
+
+            String a = await new ReqService().GetTask($"{Constants.URL}Tasks/get/filter", localValue);
             List<CaseWork.Models.Task> rec =
                    JsonSerializer.Deserialize<List<CaseWork.Models.Task>>(a);
             foreach (var item in rec)
@@ -73,16 +77,54 @@ namespace casework.Views
             Projects.Add(newProject);
 
             cvsProjects.Source = Projects;
+
+
         }
 
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             CaseWork.Models.Task a = (CaseWork.Models.Task)e.ClickedItem;
-            txt.Text = a.id.ToString();
             SplashScreenPage.NavigateNextPage("OpenTaskPage", a.title, a);
-            
-            
-            
+        }
+        private void Temp() {
+            ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            String localValue = localSettings.Values["Name"] as string;
+            if (DateTime.Now.Hour <= 24 && DateTime.Now.Hour >= 19)
+            {
+                Header.Text = "Прекрасный вечер для продуктивной работы";
+            }
+            else if (DateTime.Now.Hour < 19 && DateTime.Now.Hour >= 9)
+            {
+                Header.Text = "Хороший день что бы пороботать";
+            }
+            else if (DateTime.Now.Hour < 9 && DateTime.Now.Hour >= 6)
+            {
+                Header.Text = "Добрый утро, " + localValue;
+            }
+            else if (DateTime.Now.Hour < 6)
+            {
+                Header.Text = localValue + ", пора бы отдохнуть";
+            }
+        }
+
+        private async void CreateTaskButton_Click(object sender, RoutedEventArgs e)
+        {
+            ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            String localValue = localSettings.Values["JwtToken"] as string;
+
+            NewTask task = await SplashScreenPage.ShowCreateTaskDialog(XamlRoot) as NewTask;
+            if (task != null)
+            {
+                if (task.User != null)
+                {
+                    await new ReqService().Post($"{Constants.URL}Tasks/create/{task.User}", task, localValue);
+                }
+                else 
+                {
+                    await new ReqService().Post($"{Constants.URL}Tasks/create/{localSettings.Values["Email"] as string}", task, localValue);
+                }
+                PopulateProjects();
+            }
         }
     }
 
@@ -94,5 +136,7 @@ namespace casework.Views
         }
         public ObservableCollection<CaseWork.Models.Task> Activities { get; private set; }
     }
+
+
 
 }

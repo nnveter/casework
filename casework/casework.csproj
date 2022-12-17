@@ -13,6 +13,8 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="SplashScreen\SplashScreenPage.xaml" />
+    <None Remove="Views\Account\AccountPage.xaml" />
+    <None Remove="Views\DialogTask\CreateTask.xaml" />
     <None Remove="Views\HomePage.xaml" />
     <None Remove="Views\LoginPage.xaml" />
     <None Remove="Views\OpenTaskPage.xaml" />
@@ -32,9 +34,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.221116.1" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.25262-preview" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.221209.1" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.25267-preview" />
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+    <PackageReference Include="WinUIEx" Version="2.0.0" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
@@ -50,6 +53,9 @@
     <None Update="SplashScreen\d1.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\Account\AccountPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <None Update="Views\Assets\login.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -65,6 +71,9 @@
     <None Update="Views\Assets\task.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\DialogTask\CreateTask.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\OpenTaskPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -92,6 +101,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Model\Dto\" />
     <Folder Include="Views\Autorization\" />
     <Folder Include="Icons\" />
   </ItemGroup>

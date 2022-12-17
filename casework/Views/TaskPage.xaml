@@ -14,15 +14,32 @@
     <Grid>
         <Grid Height="70" Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" VerticalAlignment="Top">
             <TextBlock x:Name="Header" Text="You task" Margin="25" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                 <TextBlock x:Name="TextFilter" Text="Filter" VerticalAlignment="Center"/>
-                <ComboBox x:Name="ComboBoxFilter" Width="200" Margin="5,0,25,0" PlaceholderText="DeadLine" ItemsSource="{x:Bind ItemsComboBox}">
+                <ComboBox x:Name="ComboBoxFilter" Width="200" Margin="5,0,25,0" PlaceholderText="DeadLine" ItemsSource="{x:Bind ItemsComboBox}" SelectionChanged="ComboBoxFilter_SelectionChanged">
                     <x:String>DeadLine</x:String>
                     <x:String>InComplate</x:String>
                     <x:String>Complate</x:String>
                     <x:String>All</x:String>
                 </ComboBox>
-        </StackPanel>
+            </StackPanel>
         </Grid>
+        <ScrollViewer Margin="0,75,0,75" ZoomMode="Enabled" MaxZoomFactor="10" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" HorizontalScrollMode="Disabled">
+            <ListView Margin="15,0,15,0" SelectionMode="None" x:Name="TestView" IsItemClickEnabled="True" ItemClick="TestView_ItemClick" ScrollViewer.HorizontalScrollMode="Enabled" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Height="45">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding title}"/>
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray" Text="{Binding ExecutorString}"/>
+                            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal">
+                                <TextBlock Text="{Binding PrevoisTextDeadLine}" TextWrapping="NoWrap" Style="{StaticResource BodyTextBlockStyle}" />
+                                <TextBlock Margin="5,0,0,0" Text="{Binding DeadLineGetString}" Foreground="{Binding UrgencyColor}" TextWrapping="NoWrap" Style="{StaticResource BodyTextBlockStyle}" />
+                            </StackPanel>
+                            <ProgressBar Margin="-11,0,-8,2" VerticalAlignment="Bottom" Value="{Binding urgency}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollViewer>
     </Grid>
 </Page>

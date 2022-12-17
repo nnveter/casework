@@ -1,0 +1,43 @@
+<ContentDialog
+    x:Class="casework.Views.DialogTask.CreateTask"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Task.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Create Task"
+    PrimaryButtonText="Add"
+    PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
+    CloseButtonText="Cancel"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    Style="{ThemeResource DefaultContentDialogStyle}"
+    CornerRadius="8">
+
+    <Grid>
+        
+        <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <TextBox x:Name="TitleBox"  PlaceholderText="Title" HorizontalAlignment="Left" MinWidth="300"/>
+            <TextBlock Text="Assignment" FontSize="18" Foreground="DarkGray" HorizontalAlignment="Left" Margin="0,10,0,0"/>
+            <RichEditBox x:Name="AssignmentBox"  PlaceholderText="Assignment" HorizontalAlignment="Left" MinWidth="500" MinHeight="100" Margin="0,2,0,0"/>
+            <StackPanel Orientation="Vertical" Margin="0,10,0,0">
+                <TextBlock x:Name="DeadLineText" Text="DeadLine" VerticalAlignment="Center" Foreground="DarkGray" FontSize="18"/>
+                <StackPanel Orientation="Vertical" Margin="0,2,0,0">
+                    <DatePicker x:Name="DeadLineDatePicker" Language="ru" VerticalAlignment="Center"/>
+                    <TimePicker x:Name="DeadLineTimePicker" Language="ru" ClockIdentifier="24HourClock" VerticalAlignment="Center" Margin="0,5,0,0"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <TextBlock x:Name="UrgencyTextBlock" Text="Urgency" Foreground="DarkGray" FontSize="18" VerticalAlignment="Center"/>
+                <Slider x:Name="UrgencySlider" TickFrequency="10" TickPlacement="Outside" MinWidth="250" Margin="10,2,0,0" VerticalAlignment="Center" Maximum="99" StepFrequency="10"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="0,10,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="TextBlockAddUser" Text="Assign a task to another performer" VerticalAlignment="Center" Foreground="DarkGray" FontSize="18"/>
+                    <CheckBox x:Name="AddUserCheckBox" Checked="AddUserCheckBox_Checked" Unchecked="AddUserCheckBox_Unchecked" Margin="5,0,0,0" IsChecked="False"/>
+                </StackPanel>
+                <TextBox x:Name="TextBoxAddUser" Width="300" HorizontalAlignment="Left" VerticalAlignment="Center" PlaceholderText="User email" Margin="0,2,0,0" Visibility="Collapsed"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</ContentDialog>

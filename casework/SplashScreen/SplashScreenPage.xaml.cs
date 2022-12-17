@@ -2,8 +2,11 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using ABI.System;
+using App2;
+using casework.Model;
 using casework.Views;
 using casework.Views.Autorization;
+using casework.Views.DialogTask;
 using CaseWork.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -17,6 +20,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -31,7 +35,7 @@ namespace casework.SplashScreen
     /// </summary>
     public sealed partial class SplashScreenPage : Page
     {
-        public static Task task;
+        public static CaseWork.Models.Task task;
         public SplashScreenPage()
         {
             this.InitializeComponent();
@@ -43,7 +47,8 @@ namespace casework.SplashScreen
 
             // load a setting that is local to the device
             String localValue = localSettings.Values["JwtToken"] as string;
-            if (localValue != null && localValue[0] != '|') {
+            String res = await new ReqService().Get($"{Constants.URL}Auth/check", localValue);
+            if (localValue != null && localValue[0] != '|' && String.IsNullOrEmpty(res) && String.IsNullOrWhiteSpace(res)) {
                 NavigateNextPage("Home");
             }
             else
@@ -56,9 +61,9 @@ namespace casework.SplashScreen
 
         /// <summary>
         /// Метод прехода между страницами;
-        /// page = "Home";"Login";"Registration";
+        /// page = "Home";"Login";"Registration";"Registration2";"OpenTaskPage";
         /// </summary>
-        public static bool NavigateNextPage(String page, String Header = null, Task Task = null) {
+        public static bool NavigateNextPage(String page, String Header = null, CaseWork.Models.Task Task = null) {
             if (page == "Home")
             {
                 MainWindow.ContentFrame1.Navigate(typeof(HomePage), Header);
@@ -99,6 +104,13 @@ namespace casework.SplashScreen
             DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             dateTime = dateTime.AddSeconds(unixTimeStamp).ToLocalTime();
             return dateTime;
+        }
+
+        public static async Task<NewTask> ShowCreateTaskDialog(XamlRoot root) {
+            CreateTask dialog = new CreateTask();
+            dialog.XamlRoot = root;
+            var result = await dialog.ShowAsync();
+            return dialog.Task;
         }
     }
 }

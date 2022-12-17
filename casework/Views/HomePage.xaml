@@ -17,7 +17,11 @@
     </Page.Resources>
 
     <Grid>
-        <GridView x:Name="GridV" Margin="21" SelectionMode="None" IsItemClickEnabled="True" ItemsSource="{Binding Source={StaticResource cvsProjects}}" MaxHeight="500" ItemClick="GridView_ItemClick">
+        <Grid Height="70" Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" VerticalAlignment="Top">
+            <TextBlock x:Name="Header" Text="You task" Margin="25,0,0,0" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Button x:Name="CreateTaskButton" Content="Create task" Click="CreateTaskButton_Click" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"/>
+        </Grid>
+        <GridView x:Name="GridV" Margin="21,75,21,21" SelectionMode="None" IsItemClickEnabled="True" ItemsSource="{Binding Source={StaticResource cvsProjects}}" MaxHeight="500" ItemClick="GridView_ItemClick">
             <GridView.ItemTemplate>
                 <DataTemplate>
                     <Border Width="190" Padding="20" Background="#393442">
@@ -25,21 +29,18 @@
                             <Grid Margin="0,-17,-12,0" VerticalAlignment="Top" HorizontalAlignment="Right">
                                 <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Center" Height="15" Width="12" Margin="0,-2,0,0" FontSize="11" Text="{Binding urgency}"/>
                                 <ProgressRing VerticalAlignment="Center" HorizontalAlignment="Center" Height="21" Width="21" IsIndeterminate="False" Value="{Binding urgency}"/>
-                                
                             </Grid>
-                                <StackPanel>
+                            <StackPanel>
                                 <TextBlock Text="{Binding title}" FontWeight="Bold" TextWrapping="NoWrap" 
                                    Style="{StaticResource BaseTextBlockStyle}"/>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding PrevoisTextDeadLine}" TextWrapping="NoWrap" 
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding PrevoisTextDeadLine}" TextWrapping="NoWrap" 
                                     Style="{StaticResource BodyTextBlockStyle}" />
-                                <TextBlock Margin="5,0,0,0" Text="{Binding DeadLineGet}" Foreground="{Binding UrgencyColor}" TextWrapping="NoWrap" 
+                                    <TextBlock Margin="5,0,0,0" Text="{Binding DeadLineGetString}" Foreground="{Binding UrgencyColor}" TextWrapping="NoWrap" 
                                     Style="{StaticResource BodyTextBlockStyle}" />
+                                </StackPanel>
                             </StackPanel>
-                        </StackPanel>
                         </Grid>
-                        <!--<CheckBox Content="Complete" IsChecked="{Binding IsComplete}" 
-                                  IsEnabled="True"/>-->
                     </Border>
                 </DataTemplate>
             </GridView.ItemTemplate>
@@ -48,8 +49,6 @@
                     <ItemsWrapGrid Orientation="Horizontal"/>
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
-
-            
         </GridView>
         <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Right" x:Name="txt"/>
     </Grid>

@@ -39,14 +39,13 @@
                 </StackPanel>
             </Grid>
         </StackPanel>
-        <ScrollViewer Margin="-15,90,0,0" ZoomMode="Enabled" MaxZoomFactor="10"
-              VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Visible">
-        <StackPanel  Orientation="Vertical">
-            <StackPanel Orientation="Vertical" Margin="10,4,0,0">
-                <TextBlock x:Name="TextDescription" FontSize="23" Margin="25,10,0,0" Text="Description" Foreground="DarkGray"/>
+        <ScrollViewer Margin="-15,90,0,0" ZoomMode="Enabled" MaxZoomFactor="10" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Visible">
+            <StackPanel  Orientation="Vertical">
+                <StackPanel Orientation="Vertical" Margin="10,4,0,0">
+                    <TextBlock x:Name="TextDescription" FontSize="23" Margin="25,10,0,0" Text="Description" Foreground="DarkGray"/>
                     <TextBlock x:Name="Assignment" TextWrapping="Wrap" FontSize="20" Margin="25,5,20,0" />
                 </StackPanel>
-        </StackPanel>
+            </StackPanel>
         </ScrollViewer>
     </Grid>
 </Page>

@@ -48,6 +48,7 @@ namespace casework
         public MainWindow()
         {
             this.InitializeComponent();
+
             ContentFrame1 = ContentFrame;
             NavigationView1 = NavigationView;
             HomeItem1 = HomeItem;

@@ -46,7 +46,7 @@
             <NavigationView.FooterMenuItems>
 
                 <NavigationViewItem x:Name="account" Content="Account" DataContext="Account"
-                            Tag="casework.Views.//"
+                            Tag="casework.Views.Account.AccountPage"
                             ToolTipService.ToolTip="AccountPage">
                     <NavigationViewItem.Icon>
                         <SymbolIcon Symbol ="ContactPresence" />
@@ -78,8 +78,7 @@
             </NavigationView.MenuItems>
 
             <Grid>
-                <Frame x:Name="ContentFrame">
-                </Frame>
+                <Frame x:Name="ContentFrame"/>
             </Grid>
 
         </NavigationView>

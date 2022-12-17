@@ -38,11 +38,13 @@ namespace casework.Views.Autorization
         {
             Email1 = Email.Text;
             Password1 = passworBoxWithRevealmode.Password;
+
             if (Email1.Contains("@") && Email1.Contains(".") && Password1.Length >= 8 && Email1.Length <= 64 && Email1.Length >= 5)
             {
                 SplashScreenPage.NavigateNextPage("Registration2");
             }
-            else {
+            else 
+            {
                 infoBar.Message = "Почта или пароль не соответсвуют минимальным требованиям или указаны неверно";
                 infoBar.IsOpen = true; 
             }

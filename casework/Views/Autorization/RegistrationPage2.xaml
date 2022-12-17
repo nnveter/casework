@@ -19,8 +19,7 @@
                 <TextBox PlaceholderText="Last name" x:Name="LastName" Width="250" Margin="0,10,8,0"/>
                 <TextBox x:Name="City" Margin="0,10,8,0" Width="250" PlaceholderText="City" />
                 <CheckBox x:Name="Horse" Margin="0,10,8,0" Content="Horse?"/>
-                <Button x:Name="myButton" Margin="0,10,8,0" Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Center" Click="myButton_Click">Create account</Button>
-
+                <Button x:Name="myButton" Margin="0,10,8,0" Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Center" Click="myButton_Click" Content="Create account"/>
             </StackPanel>
             <Image VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,120,-40,120" Source="ms-appx:///Views/Assets/man.png" />
         </StackPanel>
