@@ -2,10 +2,9 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using App2;
-using casework.Model;
 using casework.SplashScreen;
 using casework.Views.DialogTask;
-using CaseWork.Models;
+using CaseWork.Model;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -43,6 +42,7 @@ namespace casework.Views
 
             PopulateProjects();
             Temp();
+            LoadingInviteTask();
 
         }
 
@@ -56,11 +56,13 @@ namespace casework.Views
             String localValue = localSettings.Values["JwtToken"] as string;
 
 
-            String a = await new ReqService().GetTask($"{Constants.URL}Tasks/get/filter", localValue);
-            List<CaseWork.Models.Task> rec =
-                   JsonSerializer.Deserialize<List<CaseWork.Models.Task>>(a);
+            String a = await new ReqService().GetTask($"{Constants.URL}Tasks/get/filter/{0}/{3}", localValue);
+            List<CaseWork.Model.Task> rec =
+                   JsonSerializer.Deserialize<List<CaseWork.Model.Task>>(a);
+            int id = 0;
             foreach (var item in rec)
             {
+                item.ListId = id;
                 if (item.DeadLineGet < DateTime.Now)
                 {
                     item.UrgencyColor = Constants.Red;
@@ -70,6 +72,7 @@ namespace casework.Views
                     item.UrgencyColor = Constants.Yellow;
                 }
                 newProject.Activities.Add(item);
+                id++;
             }
             
 
@@ -77,13 +80,48 @@ namespace casework.Views
             Projects.Add(newProject);
 
             cvsProjects.Source = Projects;
+        }
+
+        public async void LoadingInviteTask()
+        {
+
+            List<Project> Projects = new List<Project>();
+
+            Project inviteTasks = new Project();
+
+            ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            String localValue = localSettings.Values["JwtToken"] as string;
 
 
+            String a = await new ReqService().GetTask($"{Constants.URL}Tasks/get/nonaccepted", localValue);
+            List<CaseWork.Model.Task> rec =
+                   JsonSerializer.Deserialize<List<CaseWork.Model.Task>>(a);
+            int id = 0;
+            foreach (var item in rec)
+            {
+                item.ListId = id;
+                if (item.DeadLineGet < DateTime.Now)
+                {
+                    item.UrgencyColor = Constants.Red;
+                }
+                else if (SplashScreenPage.UnixTimeStampToDateTime(item.deadLine - 172800) < DateTime.Now)
+                {
+                    item.UrgencyColor = Constants.Yellow;
+                }
+                inviteTasks.Activities.Add(item);
+                id++;
+            }
+
+
+
+            Projects.Add(inviteTasks);
+
+            inviteTask.Source = Projects;
         }
 
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            CaseWork.Models.Task a = (CaseWork.Models.Task)e.ClickedItem;
+            CaseWork.Model.Task a = (CaseWork.Model.Task)e.ClickedItem;
             SplashScreenPage.NavigateNextPage("OpenTaskPage", a.title, a);
         }
         private void Temp() {
@@ -95,11 +133,11 @@ namespace casework.Views
             }
             else if (DateTime.Now.Hour < 19 && DateTime.Now.Hour >= 9)
             {
-                Header.Text = "Хороший день что бы пороботать";
+                Header.Text = "Хороший день чтобы поработать";
             }
             else if (DateTime.Now.Hour < 9 && DateTime.Now.Hour >= 6)
             {
-                Header.Text = "Добрый утро, " + localValue;
+                Header.Text = "Доброе утро, " + localValue;
             }
             else if (DateTime.Now.Hour < 6)
             {
@@ -126,15 +164,43 @@ namespace casework.Views
                 PopulateProjects();
             }
         }
+
+        private void TestView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private async void DismissButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button element = (Button)sender;
+
+            ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            String localValue2 = localSettings.Values["JwtToken"] as string;
+            CaseWork.Model.Task task = (CaseWork.Model.Task)element.DataContext;
+            await new ReqService().Get($"{Constants.URL}Invites/deny/{task.invite.id}", localValue2);
+            LoadingInviteTask();
+        }
+
+        private async void AcceptButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button element = (Button)sender;
+
+            ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            String localValue2 = localSettings.Values["JwtToken"] as string;
+            CaseWork.Model.Task task = (CaseWork.Model.Task)element.DataContext;
+            txt.Text = await new ReqService().Get($"{Constants.URL}Invites/accept/{task.invite.id}", localValue2);
+            LoadingInviteTask();
+            PopulateProjects();
+        }
     }
 
     public class Project
     {
         public Project()
         {
-            Activities = new ObservableCollection<CaseWork.Models.Task>();
+            Activities = new ObservableCollection<CaseWork.Model.Task>();
         }
-        public ObservableCollection<CaseWork.Models.Task> Activities { get; private set; }
+        public ObservableCollection<CaseWork.Model.Task> Activities { get; private set; }
     }
 
 

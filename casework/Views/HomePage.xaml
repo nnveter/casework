@@ -14,14 +14,16 @@
     <Page.Resources>
         <CollectionViewSource x:Name="cvsProjects" IsSourceGrouped="True" 
                               ItemsPath="Activities" />
+        <CollectionViewSource x:Name="inviteTask" IsSourceGrouped="True" 
+                              ItemsPath="Activities" />
     </Page.Resources>
 
     <Grid>
         <Grid Height="70" Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" VerticalAlignment="Top">
             <TextBlock x:Name="Header" Text="You task" Margin="25,0,0,0" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Button x:Name="CreateTaskButton" Content="Create task" Click="CreateTaskButton_Click" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"/>
         </Grid>
-        <GridView x:Name="GridV" Margin="21,75,21,21" SelectionMode="None" IsItemClickEnabled="True" ItemsSource="{Binding Source={StaticResource cvsProjects}}" MaxHeight="500" ItemClick="GridView_ItemClick">
+        <StackPanel Orientation="Vertical" Margin="0,75,0,21">
+            <GridView x:Name="GridV" Margin="21,0,21,0" SelectionMode="None" IsItemClickEnabled="True" ItemsSource="{Binding Source={StaticResource cvsProjects}}" MaxHeight="500" ItemClick="GridView_ItemClick">
             <GridView.ItemTemplate>
                 <DataTemplate>
                     <Border Width="190" Padding="20" Background="#393442">
@@ -50,6 +52,33 @@
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
         </GridView>
+        <CommandBar Background="Transparent" Margin="15,-15,0,0" DefaultLabelPosition="Right" HorizontalAlignment="Left">
+            <AppBarButton x:Name="AddTask" Icon="Add" Label="Create" ToolTipService.ToolTip="Create new task" Click="CreateTaskButton_Click"/>
+            <!--<AppBarButton x:Name="EditTask" Icon="Edit" Label="Edit" ToolTipService.ToolTip="Edit or remove tasks" />-->
+        </CommandBar>
+        </StackPanel>
+        <ScrollViewer Margin="17,195,0,0" ZoomMode="Enabled" MaxZoomFactor="10" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" HorizontalScrollMode="Disabled">
+            <ListView Margin="0,0,15,0" SelectionMode="None" x:Name="TestView" IsItemClickEnabled="True" ItemsSource="{Binding Source={StaticResource inviteTask}}" ItemClick="TestView_ItemClick" ScrollViewer.HorizontalScrollMode="Enabled" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="0">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding title}"/>
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray" Text="{Binding ExecutorString}"/>
+                            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal">
+                                <TextBlock Text="{Binding PrevoisTextDeadLine}" TextWrapping="NoWrap" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" />
+                                <TextBlock Margin="5,0,0,0" Text="{Binding DeadLineGetString}" VerticalAlignment="Center" Foreground="{Binding UrgencyColor}" TextWrapping="NoWrap" Style="{StaticResource BodyTextBlockStyle}" />
+                                <Grid Margin="10,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                    <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Center"  FontSize="11" Text="{Binding urgency}"/>
+                                    <ProgressRing VerticalAlignment="Center" HorizontalAlignment="Center" Height="21" Width="21" IsIndeterminate="False" Value="{Binding urgency}"/>
+                                </Grid>
+                                <Button x:Name="DismissButton" Content="Dismiss" Tag="{Binding id}"  Click="DismissButton_Click"/>
+                                <Button x:Name="AcceptButton" Content="Accept" Margin="5,0,5,0" Style="{StaticResource AccentButtonStyle}" Tag="{Binding id}"  Click="AcceptButton_Click"/>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollViewer>
         <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Right" x:Name="txt"/>
     </Grid>
 </Page>

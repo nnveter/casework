@@ -1,0 +1,62 @@
+<!-- Copyright (c) Microsoft Corporation. All rights reserved. -->
+<!-- Licensed under the MIT License. See LICENSE in the project root for license information. -->
+
+<Page
+    x:Class="casework.Views.Company.CompanyPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:casework.Views.Company"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <CollectionViewSource x:Name="Users" IsSourceGrouped="True" 
+                              ItemsPath="Activities" />
+    </Page.Resources>
+
+    <Grid>
+        <AppBarButton x:Name="symbol1" Icon="Delete"  Visibility="Collapsed"/>
+        <AppBarButton x:Name="symbol2" Icon="Edit" Visibility="Collapsed"/>
+        <StackPanel Orientation="Vertical">
+            <Grid Height="70" Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" VerticalAlignment="Top">
+                <TextBlock x:Name="CompanyName" Text="Company name" Margin="25,0,0,0" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            </Grid>
+            <Border Background="#A8B2D9" Margin="21,21,0,0" CornerRadius="10" ToolTipService.ToolTip="user data" VerticalAlignment="Top" HorizontalAlignment="Left">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Margin="0,10,0,0" HorizontalAlignment="Center" Text="Staff" Foreground="Black" FontSize="21"/>
+                    <CommandBar Background="Transparent" DefaultLabelPosition="Right" HorizontalAlignment="Center">
+                        <AppBarButton x:Name="AddEmployee" Icon="Add" Label="Add" ToolTipService.ToolTip="Add a new company employee" Foreground="Black" Click="AddEmployee_Click"/>
+                        <AppBarButton x:Name="EditEmployee" Icon="Edit" Label="Edit" ToolTipService.ToolTip="Change company employees" Foreground="Black" Click="EditEmployee_Click"/>
+                        <AppBarButton x:Name="Cancel" Icon="Cancel" Label="Cancel" ToolTipService.ToolTip="Cancel" Foreground="Black" Visibility="Collapsed" Click="Cancel_Click"/>
+                    </CommandBar>
+                    <ListView Margin="5,5,5,0" x:Name="GridV" SelectionMode="None" CornerRadius="10" IsItemClickEnabled="True" ItemsSource="{Binding Source={StaticResource Users}}" MaxHeight="500" ItemClick="GridV_ItemClick">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <GridView VerticalAlignment="Bottom" SelectionMode="None" CornerRadius="10" IsItemClickEnabled="True"  MaxHeight="500" ItemsSource="{Binding Source={Binding}}">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Border Background="#DB202121" CornerRadius="10" ToolTipService.ToolTip="user data">
+                                            <StackPanel Orientation="Horizontal">
+                                                <StackPanel Orientation="Horizontal" Margin="5,5,6,5" Padding="10">
+                                                    <TextBlock Text="{Binding firstName}" Foreground="DarkGray" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding lastName}" Foreground="DarkGray" Margin="5,0,20,0" VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                            </Border>
+                                        </StackPanel>
+                                    </GridView>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsWrapGrid Orientation="Vertical" />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                        </ListView>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        <TextBlock x:Name="txt" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+    </Grid>
+</Page>

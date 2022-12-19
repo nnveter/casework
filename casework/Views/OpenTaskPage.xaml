@@ -39,7 +39,7 @@
                 </StackPanel>
             </Grid>
         </StackPanel>
-        <ScrollViewer Margin="-15,90,0,0" ZoomMode="Enabled" MaxZoomFactor="10" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Visible">
+        <ScrollViewer Margin="-15,90,0,15" ZoomMode="Enabled" MaxZoomFactor="10" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Visible">
             <StackPanel  Orientation="Vertical">
                 <StackPanel Orientation="Vertical" Margin="10,4,0,0">
                     <TextBlock x:Name="TextDescription" FontSize="23" Margin="25,10,0,0" Text="Description" Foreground="DarkGray"/>
@@ -47,5 +47,8 @@
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
+        <Grid VerticalAlignment="Bottom" Height="40" Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}">
+            <Button x:Name="CompleteButton" Click="CompleteButton_Click" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource AccentButtonStyle}" Content="complete the task" Margin="10,5,0,5" />
+        </Grid>
     </Grid>
 </Page>

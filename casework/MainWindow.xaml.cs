@@ -45,6 +45,9 @@ namespace casework
         public static Frame ContentFrame1;
         public static NavigationView NavigationView1;
         public static NavigationViewItem HomeItem1;
+        public static NavigationViewItemHeader CompanyHeader1;
+        public static NavigationViewItem CompanyItem1;
+        public static NavigationViewItem CreateCompanyItem1;
         public MainWindow()
         {
             this.InitializeComponent();
@@ -52,6 +55,9 @@ namespace casework
             ContentFrame1 = ContentFrame;
             NavigationView1 = NavigationView;
             HomeItem1 = HomeItem;
+            CompanyHeader1 = CompanyHeader;
+            CompanyItem1 = CompanyItem;
+            CreateCompanyItem1 = CreateCompanyItem;
 
             //ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
             //localSettings.Values["JwtToken"] = null;

@@ -20,7 +20,7 @@ using App2;
 using System.Text.Json;
 using Windows.Storage;
 using casework.SplashScreen;
-using CaseWork.Models.Dto;
+using CaseWork.Model.Dto;
 using System.Reflection;
 using Microsoft.UI;
 
@@ -63,8 +63,8 @@ namespace casework.Views
                 response = await new ReqService().GetTask($"{Constants.URL}Tasks/get/Filter", localValue);
             }
 
-            List<CaseWork.Models.Task> rec =
-                   JsonSerializer.Deserialize<List<CaseWork.Models.Task>>(response);
+            List<CaseWork.Model.Task> rec =
+                   JsonSerializer.Deserialize<List<CaseWork.Model.Task>>(response);
 
             foreach (var item in rec)
             {
@@ -83,7 +83,7 @@ namespace casework.Views
 
         private void TestView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            CaseWork.Models.Task a = (CaseWork.Models.Task)e.ClickedItem;
+            CaseWork.Model.Task a = (CaseWork.Model.Task)e.ClickedItem;
             SplashScreenPage.NavigateNextPage("OpenTaskPage", null, a);
         }
 

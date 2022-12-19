@@ -14,6 +14,8 @@
   <ItemGroup>
     <None Remove="SplashScreen\SplashScreenPage.xaml" />
     <None Remove="Views\Account\AccountPage.xaml" />
+    <None Remove="Views\Company\CompanyPage.xaml" />
+    <None Remove="Views\Company\CreateCompanyPage.xaml" />
     <None Remove="Views\DialogTask\CreateTask.xaml" />
     <None Remove="Views\HomePage.xaml" />
     <None Remove="Views\LoginPage.xaml" />
@@ -53,6 +55,21 @@
     <None Update="SplashScreen\d1.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="SplashScreen\SplashGif.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Views\Assets\CompanyIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Views\Assets\LogOut.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Page Update="Views\Company\CreateCompanyPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Company\CompanyPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\Account\AccountPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

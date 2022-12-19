@@ -3,7 +3,7 @@
 
 using App2;
 using casework.SplashScreen;
-using CaseWork.Models;
+using CaseWork.Model;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;

@@ -17,12 +17,15 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using App2;
 using System.Text.Json;
-using casework.Model;
+using CaseWork.Model;
 using System.ComponentModel.DataAnnotations;
 using casework.SplashScreen;
 using Windows.ApplicationModel.ConversationalAgent;
 using Windows.Storage;
 using System.Xml.Linq;
+using System.Globalization;
+using System.Net.Http;
+using System.Net.Http.Json;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -34,51 +37,72 @@ namespace casework.Views.Autorization
     /// </summary>
     public sealed partial class RegistrationPage2 : Page
     {
-        private API country;
+        private String country;
 
         [Obsolete]
         public RegistrationPage2()
         {
             this.InitializeComponent();
-
-            String host = System.Net.Dns.GetHostName();
-            System.Net.IPAddress ip = System.Net.Dns.GetHostByName(host).AddressList[0];
-
-            Pro(ip.ToString());
+            Pro();
         }
 
-        public async void Pro(String ip) 
+        public void Pro() 
         {
-            string result2 = await new ReqService().Get($"http://www.geoplugin.net/json.gp?ip={ip}");
+            CultureInfo currentCulture = CultureInfo.CurrentCulture;
 
-            country = JsonSerializer.Deserialize<API>(result2);
+            // Create a RegionInfo object for the current culture
+            RegionInfo currentRegion = new RegionInfo(currentCulture.Name);
+
+            // Display the name of the region
+            country = currentRegion.EnglishName;
+
         }
 
         private async void myButton_Click(object sender, RoutedEventArgs e)
         {
-            var res = await new ReqService().Post<UserSignup>($"{Constants.URL}Auth/signup", new UserSignup {
-               Email = RegistrationPage.Email1,
-               Password = RegistrationPage.Password1,
-               FirstName = FirstName.Text, 
-               LastName = LastName.Text, 
-               City = City.Text, 
-               Country = country.geoplugin_countryName, 
-               Horse = Horse.IsChecked
-           });
-            if (res[0] == '|')
+            try
             {
-                res = res.TrimStart('|');
-                infoBar.Message = res;
-                infoBar.IsOpen = true;
+                string baseUrl = Constants.URL;
+                string path = "Auth/signup";
+                Uri url = new Uri(baseUrl + path);
 
+                UserSignup signup = new UserSignup
+                {
+                    Email = RegistrationPage.Email1,
+                    Password = RegistrationPage.Password1,
+                    FirstName = FirstName.Text,
+                    LastName = LastName.Text,
+                    City = City.Text,
+                    Country = country,
+                    Horse = Horse.IsChecked
+                };
+
+                using (HttpClient client = new HttpClient())
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(url, signup);
+                    response.EnsureSuccessStatusCode();
+                    string result = await response.Content.ReadAsStringAsync();
+
+                    if (result[0] == '|')
+                    {
+                        result = result.TrimStart('|');
+                        infoBar.Message = result;
+                        infoBar.IsOpen = true;
+                    }
+                    else
+                    {
+                        ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+                        localSettings.Values["JwtToken"] = result;
+                        localSettings.Values["Name"] = Name;
+                        localSettings.Values["Email"] = RegistrationPage.Email1;
+
+                        SplashScreenPage.NavigateNextPage("Home");
+                    }
+                }
             }
-            else {
-                ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-                localSettings.Values["JwtToken"] = res;
-                localSettings.Values["Name"] = Name;
-                localSettings.Values["Email"] = RegistrationPage.Email1;
-
-                SplashScreenPage.NavigateNextPage("Home");
+            catch (Exception ex)
+            {
+                // Handle the exception
             }
         }
 

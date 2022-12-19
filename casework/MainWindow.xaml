@@ -75,6 +75,24 @@
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
+                <NavigationViewItemHeader x:Name="CompanyHeader" Content="Company"/>
+
+                <NavigationViewItem x:Name="CompanyItem" Content="Company" DataContext="CompanyPage" Visibility="Collapsed"
+                            Tag="casework.Views.Company.CompanyPage"
+                            ToolTipService.ToolTip="CompanyPage">
+                    <NavigationViewItem.Icon>
+                        <ImageIcon x:Name="CompanyIcon" Source="ms-appx:///Views/Assets/CompanyIcon.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItem x:Name="CreateCompanyItem" Content="Create Company" DataContext="CreateCompanyPage"
+                            Tag="casework.Views.Company.CreateCompanyPage"
+                            ToolTipService.ToolTip="CreateCompanyPage">
+                    <NavigationViewItem.Icon>
+                        <SymbolIcon Symbol ="Add" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
             </NavigationView.MenuItems>
 
             <Grid>

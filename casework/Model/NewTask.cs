@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace casework.Model
+namespace CaseWork.Model
 {
     public class NewTask
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace casework.Model
+namespace cCaseWork.Model
 {
     class API
     {

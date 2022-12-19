@@ -1,4 +1,4 @@
-﻿namespace CaseWork.Models;
+﻿namespace CaseWork.Model;
 
 public class RoleRelation
 {

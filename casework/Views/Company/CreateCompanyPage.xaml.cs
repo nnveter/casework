@@ -3,7 +3,6 @@
 
 using App2;
 using casework.SplashScreen;
-using casework.Views.Autorization;
 using CaseWork.Model;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -25,39 +24,39 @@ using Windows.Storage;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace casework.Views.Account
+namespace casework.Views.Company
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class AccountPage : Page
+    public sealed partial class CreateCompanyPage : Page
     {
-        public User ViewModel;
-        public AccountPage()
+        public CreateCompanyPage()
         {
             this.InitializeComponent();
-            ViewModel = SplashScreenPage.user;
+
         }
 
-
-        private void ButtonLogOut_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
             ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-            localSettings.Values["JwtToken"] = null;
-            localSettings.Values["Name"] = null;
-            MainWindow.ContentFrame1.Navigate(typeof(LoginPage));
-            MainWindow.NavigationView1.IsPaneVisible = false;
-        }
+            String localValue = localSettings.Values["JwtToken"] as string;
 
-        private async void GridV_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-            User user = await SplashScreenPage.ShowOpenUserDataDialog(this.XamlRoot);
-            if (user != SplashScreenPage.user && user != null) {
-               await new ReqService().Post($"{Constants.URL}Users/update/profile", user, localSettings.Values["JwtToken"] as string);
+            CaseWork.Model.Company company = new CaseWork.Model.Company() { name = txt.Text };
+
+            await new ReqService().Post($"{Constants.URL}Companies/create", company, localValue);
+            String res3 = await new ReqService().Get($"{Constants.URL}Companies/get/company", localValue);
+            if (!string.IsNullOrEmpty(res3))
+            {
+                SplashScreenPage.company = JsonSerializer.Deserialize<CaseWork.Model.Company>(res3);
+                MainWindow.CreateCompanyItem1.Visibility = Visibility.Collapsed;
+                MainWindow.CompanyItem1.Visibility = Visibility.Visible;
+                MainWindow.CompanyItem1.Content = SplashScreenPage.company.name;
             }
-            SplashScreenPage.user = user;
-            ViewModel = user;
+            else
+            {
+                SplashScreenPage.company = null;
+            }
         }
     }
 }

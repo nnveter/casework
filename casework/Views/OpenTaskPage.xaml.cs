@@ -15,11 +15,13 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
-using CaseWork.Models;
+using CaseWork.Model;
 using casework.SplashScreen;
 using System.Drawing;
 using Microsoft.UI;
 using Windows.UI;
+using App2;
+using Windows.Storage;
 
 
 // To learn more about WinUI, the WinUI project structure,
@@ -56,6 +58,17 @@ namespace casework.Views
             {
                 colors = Constants.Yellow;
             }
+            if ((bool)task.isComplete)
+            { 
+                CompleteButton.IsEnabled = false;
+                CompleteButton.Content = "task completed";
+                DeadLine.Text = task.CompletedTimeGetString;
+                Do.Text = "Выполнено";
+                if (task.DeadLineGet < task.CompletedTimeGet)
+                {
+                    colors = Constants.Red;
+                }
+            }
         }
 
         private void RuLocalization() {
@@ -63,6 +76,22 @@ namespace casework.Views
             Ot.Text = "От";
             TextUrgency.Text = "Приоритет";
             TextDescription.Text = "Описание";
+        }
+
+        private async void CompleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            CompleteButton.IsEnabled = false;
+            CompleteButton.Content = "task completed";
+            Do.Text = "Выполнено";
+            task.completedTime = ((DateTimeOffset)DateTime.Now).ToUnixTimeSeconds();
+            DeadLine.Text = task.CompletedTimeGetString;
+            if (task.DeadLineGet < task.CompletedTimeGet)
+            {
+                colors = Constants.Red;
+            }
+
+            ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            await new ReqService().Get($"{Constants.URL}Tasks/complete/{task.id}", localSettings.Values["JwtToken"] as string);
         }
     }
 }

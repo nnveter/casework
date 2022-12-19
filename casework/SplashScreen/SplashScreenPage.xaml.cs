@@ -3,11 +3,11 @@
 
 using ABI.System;
 using App2;
-using casework.Model;
 using casework.Views;
+using casework.Views.Account;
 using casework.Views.Autorization;
 using casework.Views.DialogTask;
-using CaseWork.Models;
+using CaseWork.Model;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -35,7 +36,9 @@ namespace casework.SplashScreen
     /// </summary>
     public sealed partial class SplashScreenPage : Page
     {
-        public static CaseWork.Models.Task task;
+        public static CaseWork.Model.Task task;
+        public static User user;
+        public static Company company;
         public SplashScreenPage()
         {
             this.InitializeComponent();
@@ -44,11 +47,27 @@ namespace casework.SplashScreen
         public static async void Pro()
         {
             ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-
-            // load a setting that is local to the device
             String localValue = localSettings.Values["JwtToken"] as string;
             String res = await new ReqService().Get($"{Constants.URL}Auth/check", localValue);
+
             if (localValue != null && localValue[0] != '|' && String.IsNullOrEmpty(res) && String.IsNullOrWhiteSpace(res)) {
+
+                var res2 = await new ReqService().Get($"{Constants.URL}Users/profile", localValue);
+                user = JsonSerializer.Deserialize<User>(res2);
+
+                String res3 = await new ReqService().Get($"{Constants.URL}Companies/get/company", localValue);
+                if (!string.IsNullOrEmpty(res3))
+                {
+                    company = JsonSerializer.Deserialize<Company>(res3);
+                    MainWindow.CreateCompanyItem1.Visibility = Visibility.Collapsed;
+                    MainWindow.CompanyItem1.Visibility = Visibility.Visible;
+                    MainWindow.CompanyItem1.Content = company.name;
+                } 
+                else 
+                { 
+                    company = null; 
+                }
+
                 NavigateNextPage("Home");
             }
             else
@@ -63,7 +82,7 @@ namespace casework.SplashScreen
         /// Метод прехода между страницами;
         /// page = "Home";"Login";"Registration";"Registration2";"OpenTaskPage";
         /// </summary>
-        public static bool NavigateNextPage(String page, String Header = null, CaseWork.Models.Task Task = null) {
+        public static bool NavigateNextPage(String page, String Header = null, CaseWork.Model.Task Task = null) {
             if (page == "Home")
             {
                 MainWindow.ContentFrame1.Navigate(typeof(HomePage), Header);
@@ -111,6 +130,14 @@ namespace casework.SplashScreen
             dialog.XamlRoot = root;
             var result = await dialog.ShowAsync();
             return dialog.Task;
+        }
+
+        public static async Task<User> ShowOpenUserDataDialog(XamlRoot root)
+        {
+            OpenUserData dialog = new OpenUserData();
+            dialog.XamlRoot = root;
+            var result = await dialog.ShowAsync();
+            return dialog.user;
         }
     }
 }

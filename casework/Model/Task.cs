@@ -4,7 +4,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
-namespace CaseWork.Models;
+namespace CaseWork.Model;
 
 public class Task
 {
@@ -27,9 +27,12 @@ public class Task
     public User employer { get; set; }
     public User executor { get; set; }
     public Task? subTask { get; set; }
-    
+    public Invite invite { get; set; }
+
+
     public long createdAt { get; set; } = ((DateTimeOffset)DateTime.Now).ToUnixTimeSeconds();
 
     public string PrevoisTextDeadLine { get; set; } = "до";
     public string ExecutorString { get; set; }
+    public int ListId { get; set; }
 }

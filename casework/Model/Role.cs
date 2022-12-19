@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CaseWork.Models;
+namespace CaseWork.Model;
 
 public class Role
 {

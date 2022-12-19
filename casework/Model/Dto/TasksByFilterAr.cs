@@ -1,4 +1,4 @@
-﻿namespace CaseWork.Models.Dto;
+﻿namespace CaseWork.Model.Dto;
 
 public class TasksByFilterAr
 {

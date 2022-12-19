@@ -1,6 +1,6 @@
 ﻿namespace App2;
 
-using CaseWork.Models.Dto;
+using CaseWork.Model.Dto;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -48,15 +48,12 @@ public class ReqService
         if (bearer != null) client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer);
 
         var response = await client.GetAsync(url);
-        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized | response.StatusCode == System.Net.HttpStatusCode.BadRequest)
         {
             return null;
         }
 
-        String res = await response.Content.ReadAsStringAsync();
-        res = res.TrimEnd('"');
-        res = res.TrimStart('"');
-        return res;
+        return await response.Content.ReadAsStringAsync();
     }
 
     public async Task<string> GetTask(string url, string? bearer = null, TasksAccessFilter accessFilter = TasksAccessFilter.Executor, TasksTypeFilter typeFilter = TasksTypeFilter.All)
