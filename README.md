@@ -4,7 +4,6 @@
 [![library](https://img.shields.io/badge/Library-WinUi%203-blueviolet)](https://learn.microsoft.com/ru-ru/windows/apps/winui/)
 [![poweredby](https://img.shields.io/badge/Platform-.NET%206-blueviolet)](https://dotnet.microsoft.com)
 [![package](https://img.shields.io/badge/Platform-Windows%20App%20Sdk-blueviolet)](https://developer.microsoft.com/ru-ru/windows/downloads/windows-sdk/)
-[![package](https://img.shields.io/badge/Platform-Windows%20App%20Sdk-blueviolet)](https://developer.microsoft.com/ru-ru/windows/downloads/windows-sdk/)
 [![platform](https://img.shields.io/badge/Platform-Windows%2011%20(10.0.22621.0)-blueviolet)](https://learn.microsoft.com/ru-ru/windows/apps/winui/)
 </h1>
 
