@@ -1,4 +1,4 @@
-ㅤ<h1 align="center">CaseWork(frozen)
+ㅤ<h1 align="center">CaseWork (frozen)
 
 [![developedby](https://img.shields.io/badge/Developed%20by-nnveter-orange)](https://github.com/nnveter)
 [![library](https://img.shields.io/badge/Library-WinUi%203-blueviolet)](https://learn.microsoft.com/ru-ru/windows/apps/winui/)
